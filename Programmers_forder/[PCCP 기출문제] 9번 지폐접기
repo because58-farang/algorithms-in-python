@@ -15,3 +15,22 @@
 지갑에 넣기 위해 지폐를 최소 몇 번 접어야 하는지
 
 4. 풀이
+def solution(wallet, bill):
+    answer = 0 #접은 횟수
+    
+    max_w = max(wallet)
+    min_w = min(wallet)
+    max_b = max(bill)
+    min_b = min(bill)
+    
+    while(max(bill) > max_w or min(bill) > min_w):
+        if bill[0] > bill[1]:
+            bill[0] = bill[0] // 2
+        else:
+            bill[1] = bill[1] // 2
+        answer += 1
+                    
+    
+    return answer
+
+
