@@ -10,5 +10,16 @@ N명의 학생 정보가 있다. 학생 정보는 학생의 이름과 학생의 
 - 모든 학생의 이름을 성적이 낮은 순서대로 출력한다. 성적이 동일한 학생들의 순서는 자유롭게 출력해도 괜찮다.
 
 4. 해결
+n = int(input())
+
+data = []
+for i in range(n):
+  input_data = input().split()
+  data.append((input_data[0], int(input_data[1])))
+
+array = sorted(data, key =lambda student: student[1])
+
+for student in array:
+  print(student[0], end=' ')
 
 5. 풀이
