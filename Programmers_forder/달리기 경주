@@ -1,1 +1,95 @@
+https://school.programmers.co.kr/learn/courses/30/lessons/178871
 
+
+def solution(players, callings):
+    rank = {player: i for i, player in enumerate(players)}
+    # enumrate(players)로 i에0 player에 'mumu' 이런식으로 변수에 할당
+    # player : i 구조로 players 전체 순회
+    for call in callings:
+        #rank[call] # 불린 선수의 순위
+        #rank[call]-1 # 불린 선수의 바로 앞 순위
+        #rank[call], rank[call]-1 = rank[call-1], rank[call]
+        
+        current_rank = rank[call]
+        if current_rank == 0:
+            continue
+        front_player = current_rank-1
+        
+        players[current_rank], players[front_player] = players[front_player], players[current_rank]
+        rank[call] -= 1
+        rank[front_player] += 1
+        
+        
+    return players
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+최초 풀이
+def solution(players, callings):
+    answer = []
+    
+    for i in range(len(callings)): # 부른 횟수
+        for j in range(len(players)): # 
+            if callings[i] == players[j]:
+                players[j], players[j-1] = players[j-1], players[j]
+                
+    return players
+
+로 하니까 시간 초과 발생했다.
+
+문제 발생 원인
+1. 인덱스는 모든 리스트에 대해서 하나씩 순차적으로 검사를 해서 시간이 많이 걸린다. 
+하지만 딕셔너리로 바꾸게 되면 hash값을 가진 트리구조로 Key값을 저장하기 때문에 index에 비해서 찾아내는 속도가 월등히 빠르다.
+
+2. index의 시간복잡도가 O(n)인데, 이걸 callings에 대한 for문 안에 넣으면 시간복잡도가 O(n^2) 라서 시간초과가 발생합니다.
+
+문제 해결을 위한 지식
+
+* 딕셔너리란?
+: 단어 그대로 '사전'이라는 뜻이다.
+- 리스트나 튜플처럼 순차적으로 해당 요솟값을 구하지 않고 Key를 통해 Value를 얻는다.
+-> 사전의 내용을 순차적으로 모두 검색하는게 아닌, 특정 단어가 있는 곳만 접근하는 것이다.
+- 리스트나 튜플, 문자열은 요솟값을 얻고자 할 때 인덱싱이나 슬라이싱 기법 중 하나를 사용했다. 하지만 딕셔너리는 단 1가지 방법뿐이다. 그것은 바로 Key를 사용해서 Value를 구하는 방법이다
+ex)
+>>> grade = {'pey': 10, 'julliet': 99}
+>>> grade['pey']
+10
+>>> grade['julliet']
+99
+
+* enumerate() 내장 함수
+ex1)
+>>> for entry in enumerate(['A', 'B', 'C']):
+...     print(entry)
+...
+(0, 'A')
+(1, 'B')
+(2, 'C')
+
+ex2)
+>>> for i, letter in enumerate(['A', 'B', 'C']):
+...     print(i, letter)
+...
+0 A
+1 B
+2 C
